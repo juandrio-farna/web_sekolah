@@ -46,6 +46,13 @@ $routes->group('auth', function (RouteCollection $routes) {
     $routes->post('register', 'AuthController::attemptRegister');
 });
 
+$routes->get('/', 'Login::index'); // Mengarahkan ke halaman login
+$routes->get('login', 'Login::index'); // Rute untuk login
+
+$routes->group('scan', function (RouteCollection $routes) {
+   // Rute lain...
+});
+
 // Admin
 $routes->group('admin', function (RouteCollection $routes) {
    // Admin dashboard
