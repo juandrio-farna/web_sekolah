@@ -24,12 +24,11 @@ $routes->set404Override();
  * --------------------------------------------------------------------
  */
 
-// We get a performance increase by specifying the default
-// route since we don't have to scan directories.
+// Mengarahkan ke halaman login
+$routes->get('/', 'Login::index'); // Rute utama
+$routes->get('login', 'Login::index'); // Rute untuk login
 
 // Scan
-$routes->get('/', 'Scan::index');
-
 $routes->group('scan', function (RouteCollection $routes) {
    $routes->get('', 'Scan::index');
    $routes->get('masuk', 'Scan::index/Masuk');
@@ -44,13 +43,6 @@ $routes->group('auth', function (RouteCollection $routes) {
     $routes->get('logout', 'AuthController::logout', ['as' => 'logout']);
     $routes->get('register', 'AuthController::register', ['as' => 'register']);
     $routes->post('register', 'AuthController::attemptRegister');
-});
-
-$routes->get('/', 'Login::index'); // Mengarahkan ke halaman login
-$routes->get('login', 'Login::index'); // Rute untuk login
-
-$routes->group('scan', function (RouteCollection $routes) {
-   // Rute lain...
 });
 
 // Admin
@@ -170,4 +162,5 @@ $routes->group('admin', function (RouteCollection $routes) {
  *
  * There will often be times that you need additional routing and you
  * need it to be able to override any defaults in this file. Environment
- * based routes is one such time. require()
+ * based routes is one such time.
+ */
