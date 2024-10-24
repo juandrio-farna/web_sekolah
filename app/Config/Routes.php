@@ -39,11 +39,8 @@ $routes->group('scan', function (RouteCollection $routes) {
    $routes->get('', 'Scan::index');
    $routes->get('masuk', 'Scan::index/Masuk');
    $routes->get('pulang', 'Scan::index/Pulang');
-
    $routes->post('cek', 'Scan::cekKode');
 });
-
-
 
 // Admin
 $routes->group('admin', function (RouteCollection $routes) {
@@ -87,14 +84,12 @@ $routes->group('admin', function (RouteCollection $routes) {
    $routes->get('siswa/bulk', 'Admin\DataSiswa::bulkPostSiswa');
 
    // POST Data Siswa
-
    $routes->group('siswa', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
       $routes->post('downloadCSVFilePost', 'DataSiswa::downloadCSVFilePost');
       $routes->post('generateCSVObjectPost', 'DataSiswa::generateCSVObjectPost');
       $routes->post('importCSVItemPost', 'DataSiswa::importCSVItemPost');
       $routes->post('deleteSelectedSiswa', 'DataSiswa::deleteSelectedSiswa');
    });
-
 
    // admin lihat data guru
    $routes->get('guru', 'Admin\DataGuru::index');
@@ -107,7 +102,6 @@ $routes->group('admin', function (RouteCollection $routes) {
    $routes->post('guru/edit', 'Admin\DataGuru::updateGuru');
    // admin hapus data guru
    $routes->delete('guru/delete/(:any)', 'Admin\DataGuru::delete/$1');
-
 
    // admin lihat data absen siswa
    $routes->get('absen-siswa', 'Admin\DataAbsenSiswa::index');
@@ -158,20 +152,18 @@ $routes->group('admin', function (RouteCollection $routes) {
    });
 });
 
+// Auth
+$routes->group('auth', function (RouteCollection $routes) {
+    $routes->get('login', 'AuthController::login', ['as' => 'login']);
+    $routes->post('login', 'AuthController::attemptLogin');
+    $routes->get('logout', 'AuthController::logout', ['as' => 'logout']);
+    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+    $routes->post('register', 'AuthController::attemptRegister');
+});
 
 /*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------
  *
- * There will often be times that you need additional routing and you
- * need it to be able to override any defaults in this file. Environment
- * based routes is one such time. require() additional route files here
- * to make that happen.
- *
- * You will have access to the $routes object within that file without
- * needing to reload it.
- */
-if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
-   require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
-}
+ * There
