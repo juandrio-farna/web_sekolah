@@ -17,11 +17,6 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-// The Auto Routing (Legacy) is very dangerous. It is easy to create vulnerable apps
-// where controller filters or CSRF protection are bypassed.
-// If you don't want to define all routes, please use the Auto Routing (Improved).
-// Set `$autoRoutesImproved` to true in `app/Config/Feature.php` and set the following to true.
-// $routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -40,6 +35,15 @@ $routes->group('scan', function (RouteCollection $routes) {
    $routes->get('masuk', 'Scan::index/Masuk');
    $routes->get('pulang', 'Scan::index/Pulang');
    $routes->post('cek', 'Scan::cekKode');
+});
+
+// Auth
+$routes->group('auth', function (RouteCollection $routes) {
+    $routes->get('login', 'AuthController::login', ['as' => 'login']);
+    $routes->post('login', 'AuthController::attemptLogin');
+    $routes->get('logout', 'AuthController::logout', ['as' => 'logout']);
+    $routes->get('register', 'AuthController::register', ['as' => 'register']);
+    $routes->post('register', 'AuthController::attemptRegister');
 });
 
 // Admin
@@ -152,18 +156,11 @@ $routes->group('admin', function (RouteCollection $routes) {
    });
 });
 
-// Auth
-$routes->group('auth', function (RouteCollection $routes) {
-    $routes->get('login', 'AuthController::login', ['as' => 'login']);
-    $routes->post('login', 'AuthController::attemptLogin');
-    $routes->get('logout', 'AuthController::logout', ['as' => 'logout']);
-    $routes->get('register', 'AuthController::register', ['as' => 'register']);
-    $routes->post('register', 'AuthController::attemptRegister');
-});
-
 /*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------
  *
- * There
+ * There will often be times that you need additional routing and you
+ * need it to be able to override any defaults in this file. Environment
+ * based routes is one such time. require()
